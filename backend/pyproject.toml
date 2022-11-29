@@ -13,6 +13,8 @@ flask-bcrypt = "^1.0.1"
 flask-migrate = "^4.0.0"
 flask = "^2.2.2"
 structlog = "^22.3.0"
+flask-wtf = "^1.0.1"
+markupsafe = "^2.1.1"
 
 
 [tool.poetry.group.dev.dependencies]
