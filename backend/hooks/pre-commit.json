@@ -1,0 +1,10 @@
+{
+    "steps": [ {
+        "name": "hello world",
+        "command": "echo {args}"
+    }, {
+        "name": "Linting, type checking and formatting",
+        "command": "make lint"
+    }, 
+    ]
+}
