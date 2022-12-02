@@ -9,9 +9,9 @@
     <h2>First one:</h2>
     <form method="POST" 
         action="{% if bloke_id is not none %}
-                    {{ url_for('edit_bloke', bloke_id=bloke_id) }}
+                    {{ url_for('login.edit_bloke', bloke_id=bloke_id) }}
                 {% else %}
-                    {{ url_for('edit_bloke') }}
+                    {{ url_for('login.edit_bloke') }}
                 {% endif %}">
         <div>{{ form.name.label }}: {{ form.name }}</div>
         {% if form.name.errors %}
