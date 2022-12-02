@@ -1,5 +1,7 @@
 import structlog
 
+from dynaconf import FlaskDynaconf
+
 from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
@@ -7,14 +9,32 @@ from flask_login import (
     LoginManager,
 )
 
-from . import config, models
+from . import models, blueprints
 from .db import db
 from .logging import init_logging, init_app_logging
-from .blueprints.login import login_blueprint
 
-init_logging(config.Config.ENVIRONMENT == config.DEV)
+
+def create_app():
+    app = Flask(__name__, static_url_path="")
+    init_app_logging(app)
+
+    # Settings managed by dynaconf; pulled from settings.toml
+    # Set FLASK_ENV to choose the environment: development or production
+    FlaskDynaconf(app)
+
+    login_manager.init_app(app)
+    db.init_app(app)
+    migrate.init_app(app, db)
+    bcrypt.init_app(app)
+
+    app.add_url_rule("/", view_func=lambda: render_template("index.html"))
+
+    blueprints.register_blueprints(app)
+
+    return app
+
+
 log = structlog.get_logger(source_module=__name__)
-
 
 # Singleton factory doodads
 migrate = Migrate()
@@ -30,21 +50,5 @@ def load_user(user_id):
     return models.User.get(user_id)
 
 
-def create_app():
-    app = Flask(__name__, static_url_path="")
-    init_app_logging(app)
-
-    app.config.from_object(config.Config)
-
-    login_manager.init_app(app)
-    db.init_app(app)
-    migrate.init_app(app, db)
-    bcrypt.init_app(app)
-
-    app.register_blueprint(login_blueprint)
-    app.add_url_rule("/", view_func=lambda: render_template("index.html"))
-
-    return app
-
-
 app = create_app()
+init_logging(app.config["ENV"] == "development")

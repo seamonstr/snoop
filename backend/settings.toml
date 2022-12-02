@@ -1,0 +1,11 @@
+    [default]
+    DEBUG = false
+
+    BLUEPRINTS = [
+        "backend.blueprints.login"
+    ]
+
+    [development]
+    SECRET_KEY = "959561b0-6cc6-11ed-bd7b-93a916ce9dac"
+    SQLALCHEMY_DATABASE_URI = "sqlite:///app.db" # CWD
+    SQLALCHEMY_TRACK_MODIFICATIONS = false
