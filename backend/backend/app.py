@@ -1,5 +1,3 @@
-import structlog
-
 from dynaconf import FlaskDynaconf
 
 from flask import Flask, render_template
@@ -11,12 +9,10 @@ from flask_login import (
 
 from . import models, blueprints
 from .db import db
-from .logging import init_logging, init_app_logging
 
 
 def create_app():
     app = Flask(__name__, static_url_path="")
-    init_app_logging(app)
 
     # Settings managed by dynaconf; pulled from settings.toml
     # Set FLASK_ENV to choose the environment: development or production
@@ -34,8 +30,6 @@ def create_app():
     return app
 
 
-log = structlog.get_logger(source_module=__name__)
-
 # Singleton factory doodads
 migrate = Migrate()
 bcrypt = Bcrypt()
@@ -51,4 +45,3 @@ def load_user(user_id):
 
 
 app = create_app()
-init_logging(app.config["ENV"] == "development")
