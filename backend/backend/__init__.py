@@ -1,6 +1,3 @@
-from . import (
-    app,
-    routes
-)
+from . import app
 
 app = app.app

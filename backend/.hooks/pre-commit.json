@@ -1,10 +1,11 @@
 {
-    "steps": [ {
+    "type": "python",
+    "venvActivate": "./.venv/bin/activate",
+    "steps": [{
         "name": "hello world",
         "command": "echo {args}"
     }, {
         "name": "Linting, type checking and formatting",
-        "command": "make lint"
-    }, 
-    ]
+        "command": "make lint 2>&1"
+    }]
 }

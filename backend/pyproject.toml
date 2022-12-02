@@ -6,7 +6,7 @@ authors = ["Simon Woodward <simon@redcabbage.org>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 flask-login = "^0.6.2"
 flask-sqlalchemy = "^3.0.2"
 flask-bcrypt = "^1.0.1"
@@ -15,11 +15,31 @@ flask = "^2.2.2"
 structlog = "^22.3.0"
 flask-wtf = "^1.0.1"
 markupsafe = "^2.1.1"
+black = "^22.10.0"
+mypy = "^0.991"
+pyproject-flake8 = "^6.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
 black = {version = "^22.10.0", allow-prereleases = true}
+sqlalchemy-stubs = "^0.4"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.flake8]
+exclude = ".venv"
+max-line-length = 160
+
+[tool.mypy]
+[[tool.mypy.overrides]]
+module = [
+    "wtforms",
+    "wtforms.fields",
+    "wtforms.validators",
+    "flask_login",
+    "flask_migrate",
+    "flask_bcrypt"
+]
+ignore_missing_imports = true

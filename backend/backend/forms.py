@@ -9,10 +9,11 @@ from wtforms.validators import (
     DataRequired,
     EqualTo,
     Optional,
-    ValidationError
+    ValidationError,
 )
 
 from backend.models import User
+
 
 class RegistrationForm(FlaskForm):
 
@@ -23,13 +24,16 @@ class RegistrationForm(FlaskForm):
         ]
     )
     pwd = PasswordField(validators=[DataRequired(), Length(8, 72)])
-    cpwd = PasswordField(validators=[
-        EqualTo("pwd", message="Passwords must match"),
-    ])
+    cpwd = PasswordField(
+        validators=[
+            EqualTo("pwd", message="Passwords must match"),
+        ]
+    )
 
     def validate_username(self, field):
-        if User.query.filter_by(username = self.username.data).first():
+        if User.query.filter_by(username=self.username.data).first():
             raise ValidationError("That username is already in use")
+
 
 class LoginForm(FlaskForm):
     username = StringField(validators=[DataRequired(), Email()])

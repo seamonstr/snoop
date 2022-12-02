@@ -1,0 +1,23 @@
+{
+  "name": "snoop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/seamonstr/snoop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seamonstr/snoop/issues"
+  },
+  "homepage": "https://github.com/seamonstr/snoop#readme",
+  "dependencies": {
+    "@escape.tech/mookme": "^2.2.0"
+  }
+}

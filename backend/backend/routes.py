@@ -1,7 +1,6 @@
 import structlog
 import flask
-from markupsafe import escape
-from wtforms import Form, StringField, IntegerField, EmailField
+from wtforms import Form, StringField, IntegerField
 from wtforms.validators import DataRequired, Length, NumberRange, ValidationError
 
 from .app import app
@@ -33,9 +32,11 @@ class BlokeForm(Form):
         if form.data == 42:
             raise ValidationError("Age is not the answer")
 
+
 @app.route("/")
 def root():
-    return flask.render_template('index.html')
+    return flask.render_template("index.html")
+
 
 @app.route("/bloke/", defaults={"bloke_id": None}, methods=["GET", "POST"])
 @app.route("/bloke/<int:bloke_id>", methods=["GET", "POST"])

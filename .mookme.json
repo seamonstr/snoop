@@ -1,0 +1,8 @@
+{
+  "addedBehavior": "exit",
+  "packagesPath": ".",
+  "packages": [
+    "backend",
+    "frontend"
+  ]
+}

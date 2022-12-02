@@ -11,12 +11,7 @@ from .logging import init_logging, init_app_logging
 from . import models
 
 from flask_login import (
-    UserMixin,
-    login_user,
     LoginManager,
-    current_user,
-    logout_user,
-    login_required,
 )
 
 init_logging(config.Config.ENVIRONMENT == config.DEV)
@@ -30,6 +25,7 @@ login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -47,5 +43,6 @@ def create_app():
     bcrypt.init_app(app)
 
     return app
+
 
 app = create_app()
