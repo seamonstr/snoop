@@ -7,8 +7,8 @@ from flask_login import (
     LoginManager,
 )
 
-from . import models, blueprints
-from .db import db
+from . import models, blueprints, ext
+from .ext import db_engine
 
 
 def create_app():
@@ -19,20 +19,16 @@ def create_app():
     FlaskDynaconf(app)
 
     login_manager.init_app(app)
-    db.init_app(app)
-    migrate.init_app(app, db)
-    bcrypt.init_app(app)
 
     app.add_url_rule("/", view_func=lambda: render_template("index.html"))
 
     blueprints.register_blueprints(app)
+    ext.register_extensions(app)
 
     return app
 
 
 # Singleton factory doodads
-migrate = Migrate()
-bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "login"

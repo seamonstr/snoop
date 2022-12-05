@@ -2,7 +2,13 @@
     DEBUG = false
 
     BLUEPRINTS = [
-        "backend.blueprints.login"
+        "backend.blueprints.login",
+    ]
+
+    EXTENSIONS = [
+        "backend.ext.db",
+        "backend.ext.migrate",
+        "backend.ext.bcrypt",
     ]
 
     [development]
