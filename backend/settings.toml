@@ -3,6 +3,7 @@
 
     BLUEPRINTS = [
         "backend.blueprints.login",
+        "backend.blueprints.helloworld",
     ]
 
     EXTENSIONS = [

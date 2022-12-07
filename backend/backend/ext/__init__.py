@@ -8,7 +8,8 @@ import flask
 # register_extensions()
 from . import db
 
-db_engine = db.engine
+
+db = db.db
 
 
 def register_extensions(app: flask.Flask):

@@ -5,3 +5,9 @@ migrate_db:
 
 upgrade_db:
 	poetry run flask --app backend.app db upgrade
+
+run:
+	poetry run flask --debug --app backend.app run
+
+shell:
+	poetry run flask --debug --app backend.app shell

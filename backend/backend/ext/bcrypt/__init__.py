@@ -6,3 +6,4 @@ bcrypt = Bcrypt()
 
 def configure(app: Flask):
     bcrypt.init_app(app)
+    app.bcrypt = bcrypt

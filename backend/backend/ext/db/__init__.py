@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-engine = SQLAlchemy()
+db = SQLAlchemy()
 
 
 def configure(app: Flask):
-    engine.init_app(app)
+    db.init_app(app)

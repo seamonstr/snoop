@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_migrate import Migrate
-from backend.ext import db_engine
+from backend.ext import db
 
 migrate = Migrate()
 
 
 def configure(app: Flask):
-    migrate.init_app(app, db_engine)
+    migrate.init_app(app, db)
