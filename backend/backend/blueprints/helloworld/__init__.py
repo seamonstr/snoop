@@ -13,6 +13,9 @@ template = """
 <body>
     <p>Hello, world!</p>
     <div>
+        <a href="/logout/">Log out</a>
+    </div>
+    <div>
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <ul class=flashes>
