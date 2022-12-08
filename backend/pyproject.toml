@@ -26,6 +26,7 @@ is-safe-url = "^1.0"
 [tool.poetry.group.dev.dependencies]
 black = {version = "^22.10.0", allow-prereleases = true}
 sqlalchemy-stubs = "^0.4"
+pytest = "^7.2.0"
 
 [build-system]
 requires = ["poetry-core"]

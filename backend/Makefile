@@ -11,3 +11,6 @@ run:
 
 shell:
 	poetry run flask --debug --app backend.app shell
+
+test:
+	poetry run python -m pytest

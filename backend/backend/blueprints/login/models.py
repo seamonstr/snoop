@@ -1,15 +1,24 @@
 from flask_login import UserMixin
-import flask
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from backend.ext import db
 
 
 class User(db.Model, UserMixin):  # type: ignore
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
-    pwd = db.Column(db.String(300), nullable=False, unique=True)
+    pwd_hash = db.Column(db.String(300), nullable=False, unique=True)
 
     def __repr__(self):
         return f"<User {self.username}>"
 
-    def check_password(self, pwd: str) -> bool:
-        return flask.current_app.bcrypt.check_password_hash(self.pwd, pwd)
+    def set_hash_from_password(self, password: str):
+        self.pwd_hash = generate_password_hash(password)
+
+    def check_password_hash(self, candidate: str) -> bool:
+        """
+        If the password is None or empty, return false.
+        Otherwise, return the result of checking the candidate
+        password against the stored hash.
+        """
+        return candidate and check_password_hash(self.pwd_hash, candidate)

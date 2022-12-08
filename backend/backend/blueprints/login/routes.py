@@ -7,17 +7,19 @@ from backend.utils import is_safe_url
 
 from . import login_blueprint
 
+
 def _get_next_url():
-    '''
-    Return a redirect reponse object to the URL in the current 
+    """
+    Return a redirect reponse object to the URL in the current
     request's 'next' arg, if that URL is safe to redirect to.
     Otherwise, redirect to '/'.
-    '''
-    next = request.args.get('next')
+    """
+    next = request.args.get("next")
     if not is_safe_url(next):
         current_app.logger.info(f"Dangerous redirect attempt: {next}")
         next = None
-    return redirect(next or url_for('index'))
+    return redirect(next or url_for("index"))
+
 
 @login_blueprint.route("/login/", methods=["POST", "GET"])
 def login():
@@ -47,7 +49,7 @@ def login():
     return render_template("login.html", form=form)
 
 
-@login_blueprint.route('/logout/', methods=["POST", "GET"])
+@login_blueprint.route("/logout/", methods=["POST", "GET"])
 def logout():
     logout_user()
     return redirect(url_for("index"))
