@@ -15,17 +15,17 @@ EXTENSIONS = [
 SECRET_KEY = "default secret key"
 LOGGING_CFG = "logging-dev.cfg"
 
-[development]
-SECRET_KEY = "959561b0-6cc6-11ed-bd7b-93a916ce9dac"
-SQLALCHEMY_DATABASE_URI = "sqlite:///app2.db" # CWD
-SQLALCHEMY_TRACK_MODIFICATIONS = false
-
 # Domains that are legitimately part of this app; used
 # to determine if we can safely redirect post-login. 
 SAFE_DOMAINS = [
     "localhost",
     "127.0.0.1",
 ]
+
+[development]
+SECRET_KEY = "959561b0-6cc6-11ed-bd7b-93a916ce9dac"
+SQLALCHEMY_DATABASE_URI = "sqlite:///app2.db" # CWD
+SQLALCHEMY_TRACK_MODIFICATIONS = false
 
 # Functional & unit testing where all configuration is provided by the test
 [empty]

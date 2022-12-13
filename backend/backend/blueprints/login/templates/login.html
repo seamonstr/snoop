@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2>First one:</h2>
-    <form method="POST" action="/login/">
+    <form method="POST" action="/login/?next={{ request.args['next'] }}">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <ul class=flashes>

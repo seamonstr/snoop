@@ -15,7 +15,7 @@ def _get_next_url():
     Otherwise, redirect to '/'.
     """
     next = request.args.get("next")
-    if not is_safe_url(next):
+    if next and not is_safe_url(next):
         current_app.logger.info(f"Dangerous redirect attempt: {next}")
         next = None
     return redirect(next or url_for("index"))
@@ -29,24 +29,34 @@ def login():
         return _get_next_url()
 
     form = LoginForm()
-    if form.validate_on_submit():
-        current_app.logger.debug("Form validated")
+    if request.method == "GET":
+        status = 200
+    else:
+        status = 401
+        # the validation process sets error messages on any field in the form
+        # whose validation fails; they're rendered in the call to the template below.
+        if form.validate_on_submit():
+            current_app.logger.debug("Form validated")
+            user = User.query.filter_by(username=form.username.data).first()
+            current_app.logger.debug(f"Got user {user}")
 
-        user = User.query.filter_by(username=form.username.data).first()
-        current_app.logger.debug(f"Got user {user}")
+            if user and user.check_password_hash(form.pwd.data):
+                current_app.logger.debug("Login success")
+                login_user(user, remember=form.remember_me.data)
+                return _get_next_url()
+            else:
+                current_app.logger.info(
+                    f"Failed login for {form.username.data}: {'No such user' if not user else user.id}"
+                )
+                flash("Invalid username or password")
 
-        if user is None or not user.check_password(form.pwd.data):
-            current_app.logger.info(
-                f"Failed login for {user.username}: {'No user' if not user else user.id}"
-            )
-            flash("Invalid username or password")
-            return redirect(url_for("login.login"))
-        current_app.logger.debug("Login success")
-
-        login_user(user, remember=form.remember_me.data)
-        return _get_next_url()
-
-    return render_template("login.html", form=form)
+    return (
+        render_template(
+            "login.html",
+            form=form,
+        ),
+        status,
+    )
 
 
 @login_blueprint.route("/logout/", methods=["POST", "GET"])
