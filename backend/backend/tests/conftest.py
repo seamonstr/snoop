@@ -87,7 +87,7 @@ class FlaskClient(BaseFlaskClient):
         return self.get("/logout", follow_redirects=True)
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def db_config():
     db_fd, fn = tempfile.mkstemp()
     try:
@@ -100,7 +100,7 @@ def db_config():
         os.unlink(fn)
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def app_with_temp_db(db_config: dict) -> flask.Flask:
     """
     Application object with a usable but empty DB, CSRF-enabled.
@@ -115,7 +115,7 @@ def app_with_temp_db(db_config: dict) -> flask.Flask:
     return app
 
 
-@pytest.fixture()
+@pytest.fixture(scope="module")
 def app_with_users(app_with_temp_db: flask.Flask) -> flask.Flask:
     """
     Provides an app object with a configured set of users that can
