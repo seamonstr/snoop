@@ -7,6 +7,7 @@ def test_user():
     u = models.User(username="bob", pwd_hash="somehash")
     # Literal test; do the fields get set correctly via the constructor?
     assert u.username == "bob" and u.pwd_hash == "somehash"
+    assert not u.check_password_hash("somehash")
 
     # If you pass a password to __init__, it should store the hash
     u = models.User(username="bob", password="somepass")
