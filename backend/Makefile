@@ -1,5 +1,12 @@
 include ./pyproject_common/makefile-include
 
+# For new checkouts; create a new venv, get poetry 
+# and all dependent packages installed.
+setup:
+	python -m venv .venv
+	pip install poetry
+	poetry install
+
 # Target to create the migrations dir if it doesn't exist
 migrations:
 	poetry run flask --app backend.app db init
@@ -18,4 +25,4 @@ shell:
 	poetry run flask --debug --app backend.app shell
 
 test:
-	poetry run python -m pytest
+	poetry run python -m pytest 

@@ -9,6 +9,17 @@ class User(db.Model, UserMixin):  # type: ignore
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
     pwd_hash = db.Column(db.String(300), nullable=False, unique=True)
 
+    def __init__(self, **kwargs):
+        password = kwargs.get("password")
+        if password:
+            if "pwd_hash" in kwargs:
+                raise ValueError("Specify only one of password or pwd_hash")
+            kwargs.pop("password")
+
+        db.Model.__init__(self, **kwargs)
+        if password:
+            self.set_hash_from_password(password)
+
     def __repr__(self):
         return f"<User {self.username}>"
 
