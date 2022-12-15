@@ -24,15 +24,17 @@ SAFE_DOMAINS = [
 
 [development]
 SECRET_KEY = "959561b0-6cc6-11ed-bd7b-93a916ce9dac"
-SQLALCHEMY_DATABASE_URI = "sqlite:///app2.db" # CWD
+
+# Convenience for local dev environments. Override by setting FLASK_DB_HOST, etc
+DB_HOST = "127.0.0.1"
+DB_UNAME = "postgres"
+DB_PASS = "somesecret"
+SQLALCHEMY_DATABASE_URI = "@format postgresql://{this.DB_UNAME}:{this.DB_PASS}@{this.DB_HOST}/{this.DB_UNAME}"
+# SQLALCHEMY_DATABASE_URI = "sqlite:///app2.db" # CWD
 SQLALCHEMY_TRACK_MODIFICATIONS = false
 
-# Functional & unit testing where all configuration is provided by the test
+# Used for a unit test in backend/test_app.py
 [empty]
 
 BLUEPRINTS=[]
 EXTENSIONS=[]
-
-# Functional & unit testing where default blueprints and extensions
-# are required, but other config is supplied by the test
-[db-only]

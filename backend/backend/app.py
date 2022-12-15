@@ -26,7 +26,7 @@ def create_app(**kwargs) -> Flask:
     """
     app = Flask(__name__, static_url_path="")
 
-    # Settings managed by dynaconf; pulled from settings.toml
+    # Settings managed by dynaconf, taken from settings.toml
     # Set FLASK_ENV to choose the environment: development or production
     FlaskDynaconf(app, **kwargs)
 
