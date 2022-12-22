@@ -2,17 +2,7 @@ from dynaconf import FlaskDynaconf
 
 from flask import Flask, render_template
 
-from . import blueprints, ext, logging
-
-
-# Logging, as ever, is a pain.
-# You should only ever configure logging once in Python, because
-# reconfiguring it disables all existing loggers.
-
-# However, dynaconf will only load the config once it has an app
-# object to configure, so we can only configure the logging on the
-# creation of the first app.
-logging_configured = False
+from . import blueprints, ext
 
 
 def create_app(**kwargs) -> Flask:
@@ -29,14 +19,6 @@ def create_app(**kwargs) -> Flask:
     # Settings managed by dynaconf, taken from settings.toml
     # Set FLASK_ENV to choose the environment: development or production
     FlaskDynaconf(app, **kwargs)
-
-    global logging_configured
-    if not logging_configured:
-        log_config = app.config.get("LOGGING_CFG", None)
-        if log_config is None:
-            raise RuntimeError("LOGGING_CFG isn't set in settings.toml")
-        logging.configure_logging(log_config)
-        logging_configured = True
 
     app.add_url_rule(
         "/", endpoint="index", view_func=lambda: render_template("index.html")
